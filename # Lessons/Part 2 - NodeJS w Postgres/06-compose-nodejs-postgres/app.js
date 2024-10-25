@@ -1,36 +1,20 @@
 /*
-  Add PgAdmin to docker-compose.yaml
+  Setup 
+  - image: postgres
+    ports:
+      - '6543:5432'
 
-  🌲 With this setup, we don't need to install anything related to Postgres in our computer -> Docker will install PostgresDB & PGAdmin for us.
-  🍡 we need to create .env file -> ${PG_USER} ${PG_PASSWORD} ${PG_DB}
-  🍀 since they are in the same docker-compose -> docker will generate the virtual network -> we can use the service name to connect
-
-
-\\\\\\\\\\\\\\\\\\\\\\\\\\
-  
-  From PGAdmin Local Machine
-  # host: localhost
-  # port: 6543
-  # db: test_db
+  🌲 nodejs and postgres are in same docker-compose.yaml -> connect with port 5432 + host=postgresdb
+  🌲 from local machine (like pgadmin) -> use 6543 + host=localhost
 
 
-\\\\\\\\\\\\\\\\\\\\\\\\\\
+\\\\\\\\\\\\\\\\\\\\\\\\\
 
-  From PGAdmin Container 
-  - browser -> http://localhost:5050/
-    # Host: <postgresdb>
-    # Port: <5432>
-    # Database: <test_db> or postgres (default db)
+  docker-compose up --build
+  docker-compose down -v -> remove the volumes
 
 
-\\\\\\\\\\\\\\\\\\\\\\\\\\
-
-  Test
-    CREATE TABLE test (id INT, name VARCHAR(255));
-    INSERT INTO test VALUES (1, 'postgres');
-    INSERT INTO test VALUES (2, 'pg-admin');
-    INSERT INTO test VALUES (3, 'docker');
-    SELECT * FROM test;
+  🍡 No need to setup networks -> docker will create it for us
 
 
 */
