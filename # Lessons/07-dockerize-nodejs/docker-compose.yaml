@@ -1,11 +1,22 @@
 version: '3.8'
 services:
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: node-container
+    ports:
+      - '5000:5000'
+    depends_on:
+      - postgresdb
+    restart: always
+
   postgresdb:
-    container_name: container-pg
+    container_name: pg-container
     image: postgres
     hostname: localhost
     ports:
-      - '5432:5432'
+      - '127.0.0.1:6543:5432'
     environment:
       POSTGRES_USER: $PG_USER
       POSTGRES_PASSWORD: $PG_PASSWORD

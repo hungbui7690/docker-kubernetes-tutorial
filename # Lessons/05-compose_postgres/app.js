@@ -8,6 +8,7 @@
 
   docker-compose up --build
   docker-compose down -v -> remove the volumes
+  docker compose down --rmi all
   
 
 \\\\\\\\\\\\\\\\\\\\\\\\

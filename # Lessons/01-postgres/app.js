@@ -7,7 +7,7 @@
   🍀 postgres 17
   🍀 if we cannot connect to postgres container after setup -> try to remove the <volume>, <network>, container, images...
 
-
+172.17.0.2
 
 \\\\\\\\\\\\\\\\\\\\\\\\\\\
 
@@ -19,8 +19,8 @@
 
 \\\\\\\\\\\\\\\\\\\\\\\\\\\
 
-  - docker run --name pg-container -p 5432:5432 -e POSTGRES_PASSWORD=121212 -d postgres
-  - docker run -p 5050:80 -e 'PGADMIN_DEFAULT_EMAIL=user@domain.com' -e PGADMIN_DEFAULT_PASSWORD=SuperSecret -d dpage/pgadmin4
+  - docker run --name pg-container -p 6543:5432 -e POSTGRES_PASSWORD=121212 -d postgres
+  - docker run -p 5050:80 -e 'PGADMIN_DEFAULT_EMAIL=admin@admin.com' -e PGADMIN_DEFAULT_PASSWORD=121212 -d dpage/pgadmin4
     🌲 now, both pg-container & pgadmin are in the same Network -> can connect
 
 
@@ -28,9 +28,9 @@
 
   - docker -a
     -> check the port column
-  - docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' pg-container
+  - docker inspect pg-container -> get the ip address of the container
     🌿 <172.17.0.2> -> outside of the container
-    🌲 localhost -> inside the container 
+    🌲 localhost -> both are in the same the container 
 
 
 \\\\\\\\\\\\\\\\\\\\\\\\\\\

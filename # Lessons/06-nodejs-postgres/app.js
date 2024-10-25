@@ -1,30 +1,31 @@
 /*
-  npm i express pg nodemon
+  NodeJS Connect to Postgres Container with docker-compose
+    ports:
+    - '127.0.0.1:6543:5432'
 
-
-  docker-compose build --no-cache
-  docker-compose up
-
-
+  - npm i express pg nodemon
+  - docker-compose up --build
+  - docker-compose down -v
 
 
 */
 
+const express = require('express')
 const app = express()
-
 const { Pool } = require('pg')
 
 var pool
 
 pool = new Pool({
   user: 'postgres',
-  host: 'db',
-  password: 'root',
+  host: 'localhost',
+  password: '121212',
+  port: '6543',
+  database: 'test_db',
 })
 
 const port = 8080
 
-// body
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
@@ -37,6 +38,9 @@ app.get('/', async (req, res) => {
 
 app.post('/users', async (req, res) => {
   const { name, age } = req.body
+  console.log(req.body)
+  console.log(name, age)
+
   const response = await pool.query(
     'INSERT INTO users (name, age) VALUES ($1, $2)',
     [name, age]

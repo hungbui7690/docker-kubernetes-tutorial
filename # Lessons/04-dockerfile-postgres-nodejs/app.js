@@ -1,7 +1,7 @@
 /*
-  Dockerize NodeJS with Postgres
-  1. Dockerfile
-  2. .dockerignore
+  NodeJS Connect to Postgres Container
+  - docker build --no-cache -t my-pg-db .
+  - docker run -p 127.0.0.1:6543:5432 my-pg-db
 
 
 */
@@ -10,17 +10,13 @@ const express = require('express')
 const app = express()
 const { Pool } = require('pg')
 
-var pool
-
-pool = new Pool({
-  user: 'postgres',
+const pool = new Pool({
   host: 'localhost',
+  user: 'postgres',
   password: '121212',
+  database: 'postgres',
   port: '6543',
-  database: 'test_db',
 })
-
-const port = 8080
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
