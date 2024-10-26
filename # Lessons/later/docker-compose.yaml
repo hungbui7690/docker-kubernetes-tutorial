@@ -1,0 +1,25 @@
+version: '3.8'
+services:
+  vite_docker:
+    image: node:alpine
+    container_name: vite_docker
+    # The entry point refers to the application that will execute at the time of entry within the container. It could be /bin/bash etc but as I am using an Alpine image, you have to add those dependecies.
+    entrypoint: /bin/sh
+    ports:
+      - 8000:8000
+    # The working_dir is the directory for the project within the container. When you log into the container, you will land in this directory.
+    working_dir: /app
+    volumes:
+      - type: bind
+        source: ./
+        target: /app
+    tty: true
+  frontend:
+    build:
+      context: .
+      target: build-stage
+    ports:
+      - '8080:8080'
+    volumes:
+      - '.:/app'
+    command: npm run dev
