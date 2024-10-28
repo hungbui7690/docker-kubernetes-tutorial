@@ -1,0 +1,72 @@
+/*
+  Naming & Tagging Containers and Images
+  - docker run --help
+    -> --name
+
+  - docker run -d --name <name> <image>
+  - docker ps
+    -> will see the name we created
+  
+  
+\\\\\\\\\\\\\\\\\\\\\\\\\
+
+  Tag 
+  - name:tag -> docker images -> name === repository
+    -> node:14
+    -> node:14-alpine
+    -> node:latest
+  -> when we go to docker hub -> select node image -> we will see list of tags
+
+  - docker build -t <name>:<tag> .
+  - docker run -d --name <name> <name>:<tag>
+  
+
+
+
+*/
+
+const express = require('express')
+const bodyParser = require('body-parser')
+
+const app = express()
+
+let userGoal = 'Learn Docker!'
+
+app.use(
+  bodyParser.urlencoded({
+    extended: false,
+  })
+)
+app.use(express.static('public'))
+
+app.get('/', (req, res) => {
+  res.send(`
+    <html>
+      <head>
+        <link rel="stylesheet" href="styles.css">
+      </head>
+      <body>
+        <section>
+          <h2>My Course Goal</h2>
+          <h3>${userGoal}</h3>
+        </section>
+        <form action="/store-goal" method="POST">
+          <div class="form-control">
+            <label>Course Goal</label>
+            <input type="text" name="goal">
+          </div>
+          <button>Set Course Goal</button>
+        </form>
+      </body>
+    </html>
+  `)
+})
+
+app.post('/store-goal', (req, res) => {
+  const enteredGoal = req.body.goal
+  console.log(enteredGoal)
+  userGoal = enteredGoal
+  res.redirect('/')
+})
+
+app.listen(80)

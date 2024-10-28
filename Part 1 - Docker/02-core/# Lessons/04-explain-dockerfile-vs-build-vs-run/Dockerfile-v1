@@ -1,0 +1,21 @@
+# build image from the "node" image
+FROM node
+
+# everything below will relative to /app
+WORKDIR /app
+
+# copy everything in current directory (playground/) to /app
+COPY . .
+
+# run in /app
+RUN npm install
+
+# because our app is running on port 80 -> we need to expose it
+EXPOSE 80
+
+# RUN is used to execute commands during the build process of a Docker image -> this will be run when the image is built -> container has not yet been created
+RUN node server.js
+
+# CMD is typically used to start a service or application in the container. -> this will be run when the container is started
+# CMD node server.js
+CMD ["node", "server.js"]
