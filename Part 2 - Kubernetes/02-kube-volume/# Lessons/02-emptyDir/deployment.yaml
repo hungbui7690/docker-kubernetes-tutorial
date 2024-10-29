@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: story-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: story
+  template:
+    metadata:
+      labels:
+        app: story
+    spec:
+      containers:
+        - name: story
+          image: hungbui7690/kube-data-demo:2
+          imagePullPolicy: Always
+          volumeMounts: # 2.
+            - mountPath: /app/story
+              name: story-volume
+      volumes: # 1.
+        - name: story-volume
+          emptyDir: {}

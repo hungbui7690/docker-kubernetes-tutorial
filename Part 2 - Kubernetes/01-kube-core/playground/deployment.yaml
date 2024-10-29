@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment # can have many kinds -> deployment / service / job
+metadata:
+  name: first-app-deployment # deployment name
+spec: # how the pod should be configured
+  replicas: 1 # number of pod instance
+  template: # define the pod
+    metadata:
+      labels:
+        app: first-app # can use any "key: value" here
+        tier: backend
+    spec:
+      containers:
+        - name: first-node # must have "-"
+          image: hungbui7690/kube-first-app:1 # no need "-"
+          # - name: ... # can have multiple containers
+          #   image: ...
+          imagePullPolicy: Always
+          livenessProbe: #
+            httpGet:
+              path: / # useful when we want to check some path of our app
+              port: 8080
+            periodSeconds: 10 # How often (in seconds) to perform the probe
+            initialDelaySeconds: 5 # Number of seconds after the container has started before liveness probes are initiated
+        # - name: ...
+        #   image: ...
+  selector:
+    matchLabels: # must match with the template labels
+      app: first-app
+      tier: backend
+    # matchExpressions:
+    #   - {key: app, operator: NotIn, values: [second-app, first-app]} # operator: In, NotIn, Exists, DoesNotExist -> in this case, values NotIn the list

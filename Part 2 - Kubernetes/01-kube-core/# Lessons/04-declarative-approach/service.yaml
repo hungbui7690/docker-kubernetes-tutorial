@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend
+spec:
+  selector:
+    app: first-app
+    # tier: backend # we dont need this -> any pods with the label "app: first-app" will be controlled by this service
+  ports:
+    - protocol: 'TCP'
+      port: 80
+      targetPort: 8080
+    # - protocol: 'TCP' # we can have multiple ports expose -> but since we don't have it right now -> comment
+    #   port: 443
+    #   targetPort: 443
+  type: LoadBalancer # ClusterIP / NodePort / LoadBalancer

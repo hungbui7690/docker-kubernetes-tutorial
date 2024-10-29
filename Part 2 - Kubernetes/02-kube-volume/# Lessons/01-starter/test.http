@@ -1,0 +1,21 @@
+GET http://127.0.0.1:54217/
+
+###
+
+GET http://127.0.0.1:54217/error
+
+###
+
+POST http://127.0.0.1:54217/story
+Content-Type: application/json
+
+{
+  "text" : "my story"
+}
+
+###
+
+GET http://127.0.0.1:54217/story
+
+
+
